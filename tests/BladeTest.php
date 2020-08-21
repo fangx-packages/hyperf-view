@@ -19,6 +19,7 @@ use Fangx\Tests\Stub\AlertSlot;
 use Fangx\View\Compiler\BladeCompiler;
 use Fangx\View\Compiler\CompilerInterface;
 use Fangx\View\Contract\FactoryInterface;
+use Fangx\View\Contract\ViewInterface;
 use Fangx\View\HyperfViewEngine;
 use Hyperf\Config\Config;
 use Hyperf\Contract\ConfigInterface;
@@ -46,6 +47,12 @@ class BladeTest extends TestCase
                 ],
             ],
         ]));
+    }
+
+    public function testViewFunction()
+    {
+        $this->assertInstanceOf(FactoryInterface::class, view());
+        $this->assertInstanceOf(ViewInterface::class, view('index'));
     }
 
     public function testHyperfEngine()

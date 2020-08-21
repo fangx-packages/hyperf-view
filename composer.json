@@ -32,7 +32,9 @@
         "psr-4": {
             "Fangx\\View\\": "src/"
         },
-        "files": []
+        "files": [
+            "./src/funcs.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
