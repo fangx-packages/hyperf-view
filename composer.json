@@ -1,0 +1,57 @@
+{
+    "name": "fangx/view",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "hyperf"
+    ],
+    "description": "",
+    "authors": [
+        {
+            "name": "nfangxu",
+            "email": "nfangxu@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2.0",
+        "ext-json": "*",
+        "hyperf/config": "^2.0",
+        "hyperf/di": "^2.0",
+        "hyperf/event": "^2.0",
+        "hyperf/translation": "^2.0",
+        "hyperf/utils": "^2.0",
+        "hyperf/view": "^2.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpstan/phpstan": "^0.12",
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fangx\\View\\": "src/"
+        },
+        "files": []
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fangx\\Tests\\": "tests/"
+        }
+    },
+    "bin": [],
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "cs-fix": "php-cs-fixer fix $1",
+        "analyse": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon ./src ./tests",
+        "test": "./vendor/bin/phpunit -c phpunit.xml --color=always --testdox",
+        "test-coverage": "php -d zend_extension=xdebug ./vendor/bin/phpunit -c phpunit.xml --color=always --testdox --coverage-html .codeCoverage"
+    },
+    "extra": {
+        "hyperf": {
+            "config": "Fangx\\View\\ConfigProvider"
+        }
+    }
+}
