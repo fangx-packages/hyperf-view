@@ -46,8 +46,8 @@
     "scripts": {
         "cs-fix": "php-cs-fixer fix $1",
         "analyse": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon ./src ./tests",
-        "test": "./vendor/bin/phpunit -c phpunit.xml --color=always --testdox",
-        "test-coverage": "php -d zend_extension=xdebug ./vendor/bin/phpunit -c phpunit.xml --color=always --testdox --coverage-html .codeCoverage"
+        "test": "./vendor/bin/phpunit -c phpunit.xml --color=always",
+        "test-coverage": "php -d zend_extension=xdebug ./vendor/bin/phpunit -c phpunit.xml --color=always --coverage-html .codeCoverage"
     },
     "extra": {
         "hyperf": {
