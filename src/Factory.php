@@ -451,7 +451,7 @@ class Factory implements FactoryInterface
     /**
      * Get the event dispatcher instance.
      */
-    public function getDispatcher(): EventDispatcher
+    public function getDispatcher(): EventDispatcherInterface
     {
         return $this->events;
     }
@@ -459,7 +459,7 @@ class Factory implements FactoryInterface
     /**
      * Set the event dispatcher instance.
      */
-    public function setDispatcher(EventDispatcher $events)
+    public function setDispatcher(EventDispatcherInterface $events)
     {
         $this->events = $events;
     }
