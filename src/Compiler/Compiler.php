@@ -47,6 +47,11 @@ abstract class Compiler
         }
 
         $this->files = $files;
+
+        if (! $this->files->exists($cachePath)) {
+            $this->files->makeDirectory($cachePath);
+        }
+
         $this->cachePath = $cachePath;
     }
 
