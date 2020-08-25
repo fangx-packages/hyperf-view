@@ -23,9 +23,16 @@ class CompilerFactory
 {
     public function __invoke(Container $container)
     {
-        return new BladeCompiler(
+        $blade = new BladeCompiler(
             $container->get(Filesystem::class),
             $container->get(ConfigInterface::class)->get('view.config.cache_path')
         );
+
+        // register view components
+        foreach ((array)$container->get(ConfigInterface::class)->get('view.components') as $alias => $class) {
+            $blade->component($class, $alias);
+        }
+
+        return $blade;
     }
 }

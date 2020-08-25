@@ -23,9 +23,22 @@ class FinderFactory
 {
     public function __invoke(Container $container)
     {
-        return new Finder(
+        $finder = new Finder(
             $container->get(Filesystem::class),
             (array)$container->get(ConfigInterface::class)->get('view.config.view_path')
         );
+
+        // register view namespace
+        foreach ((array)$container->get(ConfigInterface::class)->get('view.namespaces') as $namespace => $hints) {
+            foreach ($finder->getPaths() as $viewPath) {
+                if (is_dir($appPath = $viewPath . '/vendor/' . $namespace)) {
+                    $finder->addNamespace($namespace, $appPath);
+                }
+            }
+
+            $finder->addNamespace($namespace, $hints);
+        }
+
+        return $finder;
     }
 }
