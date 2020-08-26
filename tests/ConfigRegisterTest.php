@@ -55,25 +55,13 @@ class ConfigRegisterTest extends TestCase
 
     public function testRegisterComponents()
     {
-        $this->assertSame('success', $this->view('simple_8', ['message' => 'success']));
-        $this->assertSame('success', $this->view('simple_9', ['message' => 'success']));
+        $this->assertSame('success', trim((string)view('simple_8', ['message' => 'success'])));
+        $this->assertSame('success', trim((string)view('simple_9', ['message' => 'success'])));
     }
 
     public function testRegisterNamespace()
     {
-        $this->assertSame('from_admin', $this->view('admin::simple_3'));
-        $this->assertSame('from_vendor', $this->view('admin::simple_4'));
-    }
-
-    protected function view(string $view, $data = [], array $mergeData = []): string
-    {
-        $container = ApplicationContext::getContainer();
-
-        /** @var FactoryInterface $factory */
-        $factory = $container->get(FactoryInterface::class);
-
-        $content = $factory->make($view, $data, $mergeData)->render();
-
-        return trim($content);
+        $this->assertSame('from_admin', trim((string)view('admin::simple_3')));
+        $this->assertSame('from_vendor', trim((string)view('admin::simple_4')));
     }
 }

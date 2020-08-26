@@ -30,7 +30,7 @@ if (! function_exists('view')) {
      */
     function view($view = null, $data = [], $mergeData = [])
     {
-        if (interface_exists(ResponseInterface::class)) {
+        if (interface_exists(ResponseInterface::class) && Context::has(ResponseInterface::class)) {
             Context::set(
                 ResponseInterface::class,
                 Context::get(ResponseInterface::class)

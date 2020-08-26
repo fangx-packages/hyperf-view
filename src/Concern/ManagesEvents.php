@@ -16,7 +16,7 @@ namespace Fangx\View\Concern;
 
 use Closure;
 use Fangx\View\Container;
-use Fangx\View\Contract\ViewInterface as ViewContract;
+use Fangx\View\Contract\ViewInterface;
 use Hyperf\Utils\Str;
 
 trait ManagesEvents
@@ -76,7 +76,7 @@ trait ManagesEvents
     /**
      * Call the composer for a given view.
      */
-    public function callComposer(ViewContract $view)
+    public function callComposer(ViewInterface $view)
     {
         // @TODO
         // $this->events->dispatch('composing: '.$view->name(), [$view]);
@@ -85,7 +85,7 @@ trait ManagesEvents
     /**
      * Call the creator for a given view.
      */
-    public function callCreator(ViewContract $view)
+    public function callCreator(ViewInterface $view)
     {
         // @TODO
         // $this->events->dispatch('creating: '.$view->name(), [$view]);

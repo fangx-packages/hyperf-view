@@ -81,7 +81,7 @@ trait ManagesLoops
     /**
      * Get an instance of the last loop in the stack.
      *
-     * @return null|stdClass
+     * @return null|stdClass|void
      */
     public function getLastLoop()
     {

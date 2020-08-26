@@ -65,18 +65,20 @@ class BladeTest extends TestCase
 
     public function testRender()
     {
-        $this->assertSame('<h1>fangx/view</h1>', $this->view('index'));
-        $this->assertSame('<h1>fangx</h1>', $this->view('home', ['user' => 'fangx']));
+        $this->assertSame('<h1>fangx/view</h1>',trim((string)view('index')));
+        $this->assertSame('<h1>fangx</h1>', trim((string)view('home', ['user' => 'fangx'])));
         // *.php
-        $this->assertSame('fangx', $this->view('simple_1'));
+        $this->assertSame('fangx', trim((string)view('simple_1')));
         // *.html
-        $this->assertSame('fangx', $this->view('simple_2'));
+        $this->assertSame('fangx', trim((string)view('simple_2')));
         // @extends & @yield & @section..@stop
-        $this->assertSame('yield-content', $this->view('simple_5'));
+        $this->assertSame('yield-content', trim((string)view('simple_5')));
         // @if..@else..@endif
-        $this->assertSame('fangx', $this->view('simple_6'));
+        $this->assertSame('fangx', trim((string)view('simple_6')));
         // @{{ name }}
-        $this->assertSame('{{ name }}', $this->view('simple_7'));
+        $this->assertSame('{{ name }}', trim((string)view('simple_7')));
+        // @json()
+        $this->assertSame('{"email":"nfangxu@gmail.com","name":"fangx"}', trim((string)view('simple_10')));
     }
 
     public function testUseNamespace()
@@ -85,8 +87,8 @@ class BladeTest extends TestCase
         $factory = ApplicationContext::getContainer()->get(FactoryInterface::class);
         $factory->addNamespace('admin', __DIR__ . '/admin');
 
-        $this->assertSame('from_admin', $this->view('admin::simple_3'));
-        $this->assertSame('from_vendor', $this->view('admin::simple_4'));
+        $this->assertSame('from_admin', trim((string)view('admin::simple_3')));
+        $this->assertSame('from_vendor', trim((string)view('admin::simple_4')));
     }
 
     public function testComponent()
@@ -98,19 +100,7 @@ class BladeTest extends TestCase
         $compiler->component(Alert::class, 'alert');
         $compiler->component(AlertSlot::class, 'alert-slot');
 
-        $this->assertSame('success', $this->view('simple_8', ['message' => 'success']));
-        $this->assertSame('success', $this->view('simple_9', ['message' => 'success']));
-    }
-
-    protected function view(string $view, $data = [], array $mergeData = []): string
-    {
-        $container = ApplicationContext::getContainer();
-
-        /** @var FactoryInterface $factory */
-        $factory = $container->get(FactoryInterface::class);
-
-        $content = $factory->make($view, $data, $mergeData)->render();
-
-        return trim($content);
+        $this->assertSame('success', trim((string)view('simple_8', ['message' => 'success'])));
+        $this->assertSame('success', trim((string)view('simple_9', ['message' => 'success'])));
     }
 }

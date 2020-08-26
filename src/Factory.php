@@ -370,10 +370,8 @@ class Factory implements FactoryInterface
 
     /**
      * Register a valid view extension and its engine.
-     *
-     * @param null|Closure $resolver
      */
-    public function addExtension(string $extension, string $engine, $resolver = null)
+    public function addExtension(string $extension, string $engine, ?Closure $resolver = null)
     {
         $this->finder->addExtension($extension);
 

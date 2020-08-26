@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Fangx\View\Concern;
 
 use Fangx\View\Contract\ViewInterface;
+use Fangx\View\T;
 use InvalidArgumentException;
 
 trait ManagesLayouts
@@ -53,7 +54,7 @@ trait ManagesLayouts
                 $this->sectionStack[] = $section;
             }
         } else {
-            $this->extendSection($section, $content instanceof ViewInterface ? $content : \Fangx\View\T::e($content));
+            $this->extendSection($section, $content instanceof ViewInterface ? $content : T::e($content));
         }
     }
 
@@ -138,7 +139,7 @@ trait ManagesLayouts
      */
     public function yieldContent($section, $default = '')
     {
-        $sectionContent = $default instanceof ViewInterface ? $default : \Fangx\View\T::e($default);
+        $sectionContent = $default instanceof ViewInterface ? $default : T::e($default);
 
         if (isset($this->sections[$section])) {
             $sectionContent = $this->sections[$section];
