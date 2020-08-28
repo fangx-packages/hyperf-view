@@ -117,9 +117,9 @@ class Factory implements FactoryInterface
         $this->finder = $finder;
         $this->events = $events;
         $this->engines = $engines;
-        $this->container = Container::getInstance();
 
         $this->share('__env', $this);
+        $this->share('errors', new ViewErrorBag());
     }
 
     /**
@@ -467,6 +467,10 @@ class Factory implements FactoryInterface
      */
     public function getContainer(): ContainerInterface
     {
+        if (! $this->container) {
+            $this->setContainer(Blade::container());
+        }
+
         return $this->container;
     }
 
@@ -502,7 +506,15 @@ class Factory implements FactoryInterface
      */
     protected function normalizeName(string $name): string
     {
-        return ViewName::normalize($name);
+        $delimiter = FinderInterface::HINT_PATH_DELIMITER;
+
+        if (strpos($name, $delimiter) === false) {
+            return str_replace('/', '.', $name);
+        }
+
+        [$namespace, $name] = explode($delimiter, $name);
+
+        return $namespace . $delimiter . str_replace('/', '.', $name);
     }
 
     /**

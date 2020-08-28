@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Fangx\View\Concern;
 
-use Fangx\View\Container;
+use Fangx\View\Blade;
 
 trait ManagesTranslations
 {
@@ -44,7 +44,7 @@ trait ManagesTranslations
      */
     public function renderTranslation()
     {
-        return Container::getInstance()->make('translator')->get(
+        return Blade::container()->make('translator')->get(
             trim(ob_get_clean()),
             $this->translationReplacements
         );

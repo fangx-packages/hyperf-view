@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Fangx\View\Component;
 
 use Closure;
-use Fangx\View\Container;
+use Fangx\View\Blade;
 use Fangx\View\Contract\FactoryInterface;
 use Fangx\View\View;
 use Hyperf\Utils\ApplicationContext;
@@ -156,7 +156,7 @@ abstract class Component
     {
         $factory->addNamespace(
             '__components',
-            $directory = Container::config()->get('view.config.cache_path')
+            $directory = Blade::config('config.cache_path')
         );
 
         if (! file_exists($viewFile = $directory . '/' . sha1($contents) . '.blade.php')) {

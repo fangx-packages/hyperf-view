@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 namespace Fangx\View\Factory;
 
-use Fangx\View\Compiler\CompilerInterface;
 use Fangx\View\Engine\CompilerEngine;
 use Fangx\View\Engine\EngineResolver;
 use Fangx\View\Engine\FileEngine;
@@ -25,20 +24,10 @@ class EngineResolverFactory
 {
     public function __invoke(Container $container)
     {
-        $resolver = new EngineResolver();
-
-        $resolver->register('blade', function () use ($container) {
-            return new CompilerEngine($container->get(CompilerInterface::class));
-        });
-
-        $resolver->register('php', function () {
-            return new PhpEngine();
-        });
-
-        $resolver->register('file', function () {
-            return new FileEngine();
-        });
-
-        return $resolver;
+        return EngineResolver::getInstance([
+            'blade' => CompilerEngine::class,
+            'php' => PhpEngine::class,
+            'file' => FileEngine::class,
+        ]);
     }
 }

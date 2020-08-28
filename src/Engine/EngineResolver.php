@@ -64,4 +64,17 @@ class EngineResolver implements EngineResolverInterface
 
         throw new InvalidArgumentException("Engine [{$engine}] not found.");
     }
+
+    public static function getInstance($resolvers = [])
+    {
+        $resolver = new EngineResolver();
+
+        foreach ($resolvers as $engine => $engineResolver) {
+            $resolver->register($engine, function () use ($engineResolver) {
+                return make($engineResolver);
+            });
+        }
+
+        return $resolver;
+    }
 }

@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Fangx\View\Compiler;
 
+use Fangx\View\Blade;
 use Fangx\View\Component\AnonymousComponent;
-use Fangx\View\Container;
 use Fangx\View\Contract\FactoryInterface;
 use Hyperf\Utils\Filesystem\Filesystem;
 use Hyperf\Utils\Str;
@@ -48,7 +48,6 @@ class ComponentTagCompiler
     /**
      * Create new component tag compiler.
      *
-     * @param null|BladeCompiler
      * @param ?BladeCompiler $blade
      */
     public function __construct(array $aliases = [], ?BladeCompiler $blade = null)
@@ -257,7 +256,7 @@ class ComponentTagCompiler
      */
     protected function componentClass(string $component)
     {
-        $viewFactory = Container::getInstance()->make(FactoryInterface::class);
+        $viewFactory = Blade::container()->make(FactoryInterface::class);
 
         if (isset($this->aliases[$component])) {
             if (class_exists($alias = $this->aliases[$component])) {

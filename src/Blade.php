@@ -15,6 +15,8 @@ declare(strict_types=1);
 namespace Fangx\View;
 
 use Fangx\View\Compiler\CompilerInterface;
+use Hyperf\Contract\ConfigInterface;
+use Hyperf\Utils\ApplicationContext;
 
 /**
  * Class Blade.
@@ -44,6 +46,11 @@ use Fangx\View\Compiler\CompilerInterface;
  */
 class Blade
 {
+    /**
+     * @var \Hyperf\Contract\ContainerInterface
+     */
+    protected static $container;
+
     public static function __callStatic($method, $args)
     {
         return static::resolve()->{$method}(...$args);
@@ -51,7 +58,21 @@ class Blade
 
     public static function resolve()
     {
-        return Container::getInstance()
+        return static::container()
             ->get(CompilerInterface::class);
+    }
+
+    public static function container()
+    {
+        return static::$container ?: static::$container = ApplicationContext::getContainer();
+    }
+
+    public static function config($key, $default = '')
+    {
+        $key = 'view.' . $key;
+
+        return static::container()
+            ->get(ConfigInterface::class)
+            ->get($key, $default);
     }
 }

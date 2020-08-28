@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Fangx\View\Concern;
 
 use Closure;
-use Fangx\View\Container;
+use Fangx\View\Blade;
 use Fangx\View\Contract\ViewInterface;
 use Hyperf\Utils\Str;
 
@@ -154,7 +154,7 @@ trait ManagesEvents
         // given arguments that are passed to the Closure as the composer's data.
         return function () use ($class, $method) {
             return call_user_func_array(
-                [Container::getInstance()->make($class), $method],
+                [Blade::container()->make($class), $method],
                 func_get_args()
             );
         };

@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Fangx\View\Factory;
 
+use Fangx\View\Blade;
 use Fangx\View\Finder;
-use Hyperf\Contract\ConfigInterface;
 use Hyperf\Di\Container;
 use Hyperf\Utils\Filesystem\Filesystem;
 
@@ -25,11 +25,11 @@ class FinderFactory
     {
         $finder = new Finder(
             $container->get(Filesystem::class),
-            (array)$container->get(ConfigInterface::class)->get('view.config.view_path')
+            (array)Blade::config('config.view_path')
         );
 
         // register view namespace
-        foreach ((array)$container->get(ConfigInterface::class)->get('view.namespaces') as $namespace => $hints) {
+        foreach ((array)Blade::config('namespaces', []) as $namespace => $hints) {
             foreach ($finder->getPaths() as $viewPath) {
                 if (is_dir($appPath = $viewPath . '/vendor/' . $namespace)) {
                     $finder->addNamespace($namespace, $appPath);

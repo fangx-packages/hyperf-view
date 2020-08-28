@@ -14,8 +14,8 @@ declare(strict_types=1);
 
 namespace Fangx\View\Factory;
 
+use Fangx\View\Blade;
 use Fangx\View\Compiler\BladeCompiler;
-use Hyperf\Contract\ConfigInterface;
 use Hyperf\Di\Container;
 use Hyperf\Utils\Filesystem\Filesystem;
 
@@ -25,11 +25,11 @@ class CompilerFactory
     {
         $blade = new BladeCompiler(
             $container->get(Filesystem::class),
-            $container->get(ConfigInterface::class)->get('view.config.cache_path')
+            Blade::config('config.cache_path')
         );
 
         // register view components
-        foreach ((array)$container->get(ConfigInterface::class)->get('view.components') as $alias => $class) {
+        foreach ((array)Blade::config('components', []) as $alias => $class) {
             $blade->component($class, $alias);
         }
 

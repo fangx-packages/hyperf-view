@@ -16,7 +16,11 @@ namespace Fangx\Tests;
 
 use Fangx\Tests\Stub\Alert;
 use Fangx\Tests\Stub\AlertSlot;
+use Fangx\View\Compiler\CompilerInterface;
 use Fangx\View\Contract\FactoryInterface;
+use Fangx\View\Contract\FinderInterface;
+use Fangx\View\Factory\CompilerFactory;
+use Fangx\View\Factory\FinderFactory;
 use Fangx\View\HyperfViewEngine;
 use Hyperf\Config\Config;
 use Hyperf\Contract\ConfigInterface;
@@ -51,6 +55,11 @@ class ConfigRegisterTest extends TestCase
                 ],
             ],
         ]));
+
+        // register components
+        $container->set(CompilerInterface::class, (new CompilerFactory)($container));
+        // register namespaces
+        $container->set(FinderInterface::class, (new FinderFactory)($container));
     }
 
     public function testRegisterComponents()
