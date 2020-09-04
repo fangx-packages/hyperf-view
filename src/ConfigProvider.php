@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Fangx\View;
 
+use Fangx\View\Command\FangxViewCommand;
 use Fangx\View\Compiler\CompilerInterface;
 use Fangx\View\Contract\EngineResolverInterface;
 use Fangx\View\Contract\FactoryInterface;
@@ -34,6 +35,7 @@ class ConfigProvider
                 CompilerInterface::class => CompilerFactory::class,
             ],
             'commands' => [
+                FangxViewCommand::class,
             ],
             'annotations' => [
                 'scan' => [
@@ -45,6 +47,12 @@ class ConfigProvider
                 ],
             ],
             'publish' => [
+                [
+                    'id' => 'config',
+                    'description' => 'The config for view.',
+                    'source' => __DIR__ . '/../publish/view.php',
+                    'destination' => BASE_PATH . '/config/autoload/view.php',
+                ],
             ],
         ];
     }

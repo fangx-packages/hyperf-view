@@ -16,7 +16,6 @@ namespace Fangx\View;
 
 use Fangx\View\Contract\FactoryInterface;
 use Hyperf\Utils\ApplicationContext;
-use Hyperf\Utils\Context;
 use Hyperf\View\Engine\EngineInterface;
 
 class HyperfViewEngine implements EngineInterface
@@ -26,8 +25,6 @@ class HyperfViewEngine implements EngineInterface
         /** @var FactoryInterface $factory */
         $factory = ApplicationContext::getContainer()->get(FactoryInterface::class);
 
-        return $factory->make($template, $data)
-            ->withErrors(Context::get('_errors', []))
-            ->render();
+        return $factory->make($template, $data)->render();
     }
 }
